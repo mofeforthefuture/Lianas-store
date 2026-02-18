@@ -1,0 +1,137 @@
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  images: string[];
+  sizes: string[];
+  colors: string[];
+  featured?: boolean;
+}
+
+export const products: Product[] = [
+  {
+    id: '1',
+    name: 'Cashmere Blend Sweater',
+    price: 289,
+    description: 'Luxuriously soft cashmere blend sweater with a timeless silhouette. Perfect for layering or wearing alone. Made from premium Italian cashmere.',
+    category: 'Clothing',
+    images: ['https://images.unsplash.com/photo-1687275155477-b19c176ce9d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwY2FzaG1lcmUlMjBzd2VhdGVyJTIwbmV1dHJhbHxlbnwxfHx8fDE3NzE0NDM0Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Cream', 'Charcoal', 'Navy'],
+    featured: true,
+  },
+  {
+    id: '2',
+    name: 'Leather Crossbody Bag',
+    price: 495,
+    description: 'Elegant handcrafted leather crossbody bag. Features adjustable strap and multiple compartments. Made from full-grain Italian leather.',
+    category: 'Accessories',
+    images: ['https://images.unsplash.com/photo-1598099947145-e85739e7ca28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcmVtaXVtJTIwbGVhdGhlciUyMGhhbmRiYWd8ZW58MXx8fHwxNzcxNDQzNDQwfDA&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['One Size'],
+    colors: ['Black', 'Cognac', 'Taupe'],
+    featured: true,
+  },
+  {
+    id: '3',
+    name: 'Silk Midi Dress',
+    price: 425,
+    description: 'Flowing silk midi dress with a flattering drape. Perfect for special occasions. Made from 100% pure mulberry silk.',
+    category: 'Clothing',
+    images: ['https://images.unsplash.com/photo-1764265148862-7ee72a4fb367?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaWxrJTIwZHJlc3MlMjBlbGVnYW50fGVufDF8fHx8MTc3MTQwMjYyNnww&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: ['Ivory', 'Dusty Rose', 'Sage'],
+    featured: true,
+  },
+  {
+    id: '4',
+    name: 'Italian Leather Loafers',
+    price: 385,
+    description: 'Classic Italian leather loafers with hand-stitched detailing. Timeless style meets comfort. Made in Italy.',
+    category: 'Footwear',
+    images: ['https://images.unsplash.com/photo-1760616172899-0681b97a2de3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpdGFsaWFuJTIwbGVhdGhlciUyMGxvYWZlcnN8ZW58MXx8fHwxNzcxNDQzNTYyfDA&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['36', '37', '38', '39', '40', '41'],
+    colors: ['Black', 'Brown', 'Burgundy'],
+  },
+  {
+    id: '5',
+    name: 'Merino Wool Coat',
+    price: 650,
+    description: 'Elegant wool coat with a modern cut. Features concealed buttons and side pockets. Made from premium Australian merino wool.',
+    category: 'Outerwear',
+    images: ['https://images.unsplash.com/photo-1715408153725-186c6c77fb45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB3b29sJTIwY29hdCUyMG1pbmltYWx8ZW58MXx8fHwxNzcxNDQzNTU5fDA&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Camel', 'Black', 'Grey'],
+  },
+  {
+    id: '6',
+    name: 'Minimalist Watch',
+    price: 325,
+    description: 'Refined minimalist timepiece with Swiss movement. Sapphire crystal glass and Italian leather strap.',
+    category: 'Accessories',
+    images: ['https://images.unsplash.com/photo-1635462684825-3621c1df5403?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwd2F0Y2glMjBnb2xkfGVufDF8fHx8MTc3MTQ0MzU2MHww&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['One Size'],
+    colors: ['Gold', 'Silver', 'Rose Gold'],
+  },
+  {
+    id: '7',
+    name: 'Cotton Linen Trousers',
+    price: 195,
+    description: 'Lightweight cotton-linen blend trousers with a relaxed fit. Perfect for warm weather. Breathable and comfortable.',
+    category: 'Clothing',
+    images: ['https://images.unsplash.com/photo-1766113494461-0e5b2a96c66f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaW5lbiUyMHRyb3VzZXJzJTIwYmVpZ2V8ZW58MXx8fHwxNzcxNDQzNTYwfDA&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Beige', 'White', 'Navy'],
+  },
+  {
+    id: '8',
+    name: 'Cashmere Scarf',
+    price: 175,
+    description: 'Ultra-soft cashmere scarf in timeless design. Perfectly sized for versatile styling. Made from 100% pure cashmere.',
+    category: 'Accessories',
+    images: ['https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&h=800&fit=crop'],
+    sizes: ['One Size'],
+    colors: ['Cream', 'Grey', 'Camel', 'Black'],
+  },
+  {
+    id: '9',
+    name: 'Tailored Blazer',
+    price: 485,
+    description: 'Impeccably tailored blazer with structured shoulders and a slim fit. Made from premium wool blend.',
+    category: 'Clothing',
+    images: ['https://images.unsplash.com/photo-1770364020677-103b8eb265d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0YWlsb3JlZCUyMGJsYXplciUyMGVsZWdhbnR8ZW58MXx8fHwxNzcxNDQzNTYxfDA&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Black', 'Navy', 'Charcoal'],
+  },
+  {
+    id: '10',
+    name: 'Suede Ankle Boots',
+    price: 425,
+    description: 'Sophisticated suede ankle boots with leather sole. Block heel and side zipper. Made in Italy.',
+    category: 'Footwear',
+    images: ['https://images.unsplash.com/photo-1761052720710-32349209f6b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdWVkZSUyMGFua2xlJTIwYm9vdHN8ZW58MXx8fHwxNzcxNDQzNTYxfDA&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['36', '37', '38', '39', '40', '41'],
+    colors: ['Black', 'Taupe', 'Chocolate'],
+  },
+  {
+    id: '11',
+    name: 'Silk Blouse',
+    price: 245,
+    description: 'Elegant silk blouse with delicate button detailing. Versatile piece for any wardrobe. Made from pure mulberry silk.',
+    category: 'Clothing',
+    images: ['https://images.unsplash.com/photo-1694243382362-14da84ba6a2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaWxrJTIwYmxvdXNlJTIwd2hpdGV8ZW58MXx8fHwxNzcxNDQzNTYxfDA&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['White', 'Blush', 'Black'],
+  },
+  {
+    id: '12',
+    name: 'Canvas Tote Bag',
+    price: 125,
+    description: 'Durable canvas tote with leather handles. Spacious interior and inner pocket. Perfect for everyday use.',
+    category: 'Accessories',
+    images: ['https://images.unsplash.com/photo-1574365569389-a10d488ca3fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYW52YXMlMjB0b3RlJTIwYmFnJTIwbWluaW1hbHxlbnwxfHx8fDE3NzE0NDM1NjF8MA&ixlib=rb-4.1.0&q=80&w=1080'],
+    sizes: ['One Size'],
+    colors: ['Natural', 'Black', 'Navy'],
+  },
+];
