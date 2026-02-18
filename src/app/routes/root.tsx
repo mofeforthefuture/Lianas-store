@@ -4,6 +4,9 @@ import { shopRoute } from "./shop";
 import { productDetailRoute } from "./product-detail";
 import { cartRoute } from "./cart";
 import { checkoutRoute } from "./checkout";
+import { loginRoute } from "./login";
+import { registerRoute } from "./register";
+import { adminRoute } from "./admin";
 
 export const rootRoute = {
   path: "/",
@@ -14,5 +17,8 @@ export const rootRoute = {
     productDetailRoute,
     cartRoute,
     checkoutRoute,
+    loginRoute,
+    registerRoute,
+    adminRoute,
   ],
 };
