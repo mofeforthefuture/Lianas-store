@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { getReceiptUrl } from '../lib/storage';
 import type { Order, Payment } from '../types/database';
 import {
   Table,
@@ -12,7 +13,7 @@ import {
 import { Button } from '../components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { toast } from 'sonner';
-import type { OrderStatus } from '../types/database';
+import type { OrderStatus, PaymentStatus } from '../types/database';
 import { format } from 'date-fns';
 
 export function AdminOrdersPage() {
@@ -63,6 +64,26 @@ export function AdminOrdersPage() {
     fetchOrders();
   };
 
+  const updatePaymentStatus = async (paymentId: string, status: PaymentStatus) => {
+    const { error } = await supabase.from('payments').update({ status }).eq('id', paymentId);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success('Payment updated');
+    const order = orders.find((o) => o.payments?.some((p) => p.id === paymentId));
+    if (order && status === 'approved') {
+      await supabase.from('orders').update({ status: 'confirmed' }).eq('id', order.id);
+    }
+    fetchOrders();
+  };
+
+  const openReceipt = async (path: string) => {
+    const url = await getReceiptUrl(path);
+    if (url) window.open(url, '_blank');
+    else toast.error('Could not load receipt');
+  };
+
   if (loading) {
     return (
       <div>
@@ -109,19 +130,39 @@ export function AdminOrdersPage() {
                   <TableCell>
                     {order.payments?.length
                       ? order.payments.map((p) => (
-                          <span key={p.id} className="block text-sm">
-                            {p.status}
+                          <div key={p.id} className="flex flex-wrap items-center gap-2 text-sm">
+                            <span>{p.status}</span>
                             {p.receipt_url && (
-                              <a
-                                href={p.receipt_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-2 text-accent hover:underline"
+                              <Button
+                                variant="link"
+                                size="sm"
+                                className="h-auto p-0 text-accent"
+                                onClick={() => openReceipt(p.receipt_url!)}
                               >
-                                Receipt
-                              </a>
+                                View receipt
+                              </Button>
                             )}
-                          </span>
+                            {p.status === 'pending' && (
+                              <>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="h-7"
+                                  onClick={() => updatePaymentStatus(p.id, 'approved')}
+                                >
+                                  Approve
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="h-7 text-destructive"
+                                  onClick={() => updatePaymentStatus(p.id, 'rejected')}
+                                >
+                                  Reject
+                                </Button>
+                              </>
+                            )}
+                          </div>
                         ))
                       : '—'}
                   </TableCell>

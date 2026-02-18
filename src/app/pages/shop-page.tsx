@@ -1,20 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router';
 import { ProductCard } from '../components/product-card';
-import { products } from '../data/products';
+import { fetchProducts } from '../lib/products';
+import { products as staticProducts } from '../data/products';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Checkbox } from '../components/ui/checkbox';
 import { Label } from '../components/ui/label';
 import { Slider } from '../components/ui/slider';
 import { Button } from '../components/ui/button';
+import type { Product } from '../types/database';
 
 export function ShopPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [sortBy, setSortBy] = useState('featured');
 
   const categories = ['Clothing', 'Accessories', 'Footwear', 'Outerwear'];
+
+  useEffect(() => {
+    fetchProducts().then((data) => {
+      setProducts(data.length > 0 ? data : (staticProducts as Product[]));
+      setLoading(false);
+    });
+  }, []);
 
   useEffect(() => {
     const category = searchParams.get('category');
@@ -42,23 +53,25 @@ export function ShopPage() {
 
   // Filter by category
   if (selectedCategories.length > 0) {
-    filteredProducts = filteredProducts.filter(p => 
+    filteredProducts = filteredProducts.filter((p) =>
       selectedCategories.includes(p.category)
     );
   }
 
   // Filter by price
-  filteredProducts = filteredProducts.filter(p => 
-    p.price >= priceRange[0] && p.price <= priceRange[1]
+  filteredProducts = filteredProducts.filter(
+    (p) => Number(p.price) >= priceRange[0] && Number(p.price) <= priceRange[1]
   );
 
   // Sort products
   const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const priceA = Number(a.price);
+    const priceB = Number(b.price);
     switch (sortBy) {
       case 'price-low':
-        return a.price - b.price;
+        return priceA - priceB;
       case 'price-high':
-        return b.price - a.price;
+        return priceB - priceA;
       case 'name':
         return a.name.localeCompare(b.name);
       default:
@@ -143,6 +156,14 @@ export function ShopPage() {
 
         {/* Products Grid */}
         <div className="flex-1">
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="aspect-[3/4] bg-muted animate-pulse rounded" />
+              ))}
+            </div>
+          ) : (
+            <>
           {/* Sort Bar */}
           <div className="flex justify-between items-center mb-8 pb-4 border-b border-border">
             <p className="text-sm text-muted-foreground">
@@ -182,6 +203,8 @@ export function ShopPage() {
                 Clear Filters
               </Button>
             </div>
+          )}
+            </>
           )}
         </div>
       </div>

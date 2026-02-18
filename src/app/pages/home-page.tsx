@@ -1,12 +1,23 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
 import { Button } from '../components/ui/button';
 import { ProductCard } from '../components/product-card';
-import { products } from '../data/products';
+import { fetchFeaturedProducts } from '../lib/products';
+import { products as staticProducts } from '../data/products';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import type { Product } from '../types/database';
 
 export function HomePage() {
-  const featuredProducts = products.filter(p => p.featured);
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchFeaturedProducts().then((data) => {
+      setFeaturedProducts(data.length > 0 ? data : staticProducts.filter((p) => p.featured) as Product[]);
+      setLoading(false);
+    });
+  }, []);
 
   return (
     <div className="w-full">
@@ -67,19 +78,27 @@ export function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-            {featuredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <ProductCard product={product} />
-              </motion.div>
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="aspect-[3/4] bg-muted animate-pulse rounded" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+              {featuredProducts.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <ProductCard product={product} />
+                </motion.div>
+              ))}
+            </div>
+          )}
 
           <div className="text-center mt-12">
             <Link to="/shop">

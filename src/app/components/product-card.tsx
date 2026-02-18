@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import { Product } from '../data/products';
+import type { Product } from '../types/database';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface ProductCardProps {
@@ -48,7 +48,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </h3>
           <p className="text-sm text-muted-foreground">{product.category}</p>
           <p className="text-sm" style={{ fontFamily: 'var(--font-heading)' }}>
-            ${product.price}
+            ${Number(product.price).toFixed(2)}
           </p>
         </div>
       </motion.div>
